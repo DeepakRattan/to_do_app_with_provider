@@ -7,21 +7,23 @@ import 'package:to_do_app_with_provider/widgets/task_tile.dart';
 class TasksList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // Dynamic list view builder
-    return ListView.builder(
-      itemBuilder: (context, index) {
-        return TaskTile(
-          // widget refers to stateful widget
-          isChecked: Provider.of<TaskData>(context).tasks[index].isDone,
-          taskTitle: Provider.of<TaskData>(context).tasks[index].name,
-          checkBoxCallBack: (checkBoxState) {
-            /*setState(() {
-              widget.tasks[index].toggleDone();
-            });*/
-          },
-        );
-      },
-      itemCount: Provider.of<TaskData>(context).tasks.length,
-    );
+    return Consumer<TaskData>(builder: (context, taskData, child) {
+      // Dynamic list view builder
+      return ListView.builder(
+        itemBuilder: (context, index) {
+          return TaskTile(
+            // widget refers to stateful widget
+            isChecked: taskData.tasks[index].isDone,
+            taskTitle: taskData.tasks[index].name,
+            checkBoxCallBack: (checkBoxState) {
+              /*setState(() {
+                widget.tasks[index].toggleDone();
+              });*/
+            },
+          );
+        },
+        itemCount: taskData.tasks.length,
+      );
+    });
   }
 }
