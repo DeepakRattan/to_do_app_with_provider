@@ -1,24 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:to_do_app_with_provider/models/task_data.dart';
 import 'package:to_do_app_with_provider/models/tasks.dart';
 import 'package:to_do_app_with_provider/widgets/tasks_list.dart';
 
 import 'add_task_screen.dart';
 
-class TasksScreen extends StatefulWidget {
-  @override
-  _TasksScreenState createState() => _TasksScreenState();
-}
-
-class _TasksScreenState extends State<TasksScreen> {
-  List<Task> tasks = [
-    Task(name: 'Buy Milk'),
-    Task(name: 'Buy Fruit'),
-    Task(name: 'Buy Banana'),
-    Task(name: 'Buy Milk'),
-    Task(name: 'Buy Fruit'),
-    Task(name: 'Buy Banana'),
-  ];
-
+class TasksScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,7 +43,8 @@ class _TasksScreenState extends State<TasksScreen> {
                       height: 10.0,
                     ),
                     Text(
-                      '${tasks.length} tasks',
+                      // Step 4: Provider
+                      '${Provider.of<TaskData>(context).tasks.length} tasks',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 18.0,
@@ -73,9 +62,7 @@ class _TasksScreenState extends State<TasksScreen> {
                         topLeft: Radius.circular(15.0),
                         topRight: Radius.circular(15.0),
                       )),
-                  child: TasksList(
-                    tasks: tasks,
-                  ),
+                  child: TasksList(),
                 ),
               )
             ],
@@ -92,17 +79,7 @@ class _TasksScreenState extends State<TasksScreen> {
                           child: Container(
                         padding: EdgeInsets.only(
                             bottom: MediaQuery.of(context).viewInsets.bottom),
-                        child: AddTaskScreen(
-                          (newTaskTitle) {
-                            print('task screen $newTaskTitle');
-                            setState(() {
-                              tasks
-                                  .add(Task(name: newTaskTitle, isDone: false));
-                            });
-                            // remove the bottom sheet after new task is added
-                            Navigator.pop(context);
-                          },
-                        ),
+                        child: AddTaskScreen(),
                       )));
             }));
   }
