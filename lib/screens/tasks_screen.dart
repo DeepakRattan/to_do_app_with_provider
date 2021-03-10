@@ -1,9 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:to_do_app_with_provider/models/tasks.dart';
 import 'package:to_do_app_with_provider/widgets/tasks_list.dart';
 
 import 'add_task_screen.dart';
 
-class TasksScreen extends StatelessWidget {
+class TasksScreen extends StatefulWidget {
+  @override
+  _TasksScreenState createState() => _TasksScreenState();
+}
+
+class _TasksScreenState extends State<TasksScreen> {
+  List<Task> tasks = [
+    Task(name: 'Buy Milk'),
+    Task(name: 'Buy Fruit'),
+    Task(name: 'Buy Banana'),
+    Task(name: 'Buy Milk'),
+    Task(name: 'Buy Fruit'),
+    Task(name: 'Buy Banana'),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +55,7 @@ class TasksScreen extends StatelessWidget {
                       height: 10.0,
                     ),
                     Text(
-                      '12 tasks',
+                      '${tasks.length} tasks',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 18.0,
@@ -58,7 +73,9 @@ class TasksScreen extends StatelessWidget {
                         topLeft: Radius.circular(15.0),
                         topRight: Radius.circular(15.0),
                       )),
-                  child: TasksList(),
+                  child: TasksList(
+                    tasks: tasks,
+                  ),
                 ),
               )
             ],
@@ -75,7 +92,17 @@ class TasksScreen extends StatelessWidget {
                           child: Container(
                         padding: EdgeInsets.only(
                             bottom: MediaQuery.of(context).viewInsets.bottom),
-                        child: AddTaskScreen(),
+                        child: AddTaskScreen(
+                          (newTaskTitle) {
+                            print('task screen $newTaskTitle');
+                            setState(() {
+                              tasks
+                                  .add(Task(name: newTaskTitle, isDone: false));
+                            });
+                            // remove the bottom sheet after new task is added
+                            Navigator.pop(context);
+                          },
+                        ),
                       )));
             }));
   }
