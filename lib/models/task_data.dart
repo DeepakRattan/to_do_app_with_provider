@@ -29,4 +29,10 @@ class TaskData extends ChangeNotifier {
     // notify to all places which are listening to the TaskData about the change
     notifyListeners();
   }
+
+  // Update task for checked or unchecked state
+  void updateTask(Task task) {
+    task.toggleDone();
+    notifyListeners();
+  }
 }
