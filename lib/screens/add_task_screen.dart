@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:to_do_app_with_provider/models/task_data.dart';
 
 class AddTaskScreen extends StatelessWidget {
   @override
@@ -38,6 +40,11 @@ class AddTaskScreen extends StatelessWidget {
               color: Colors.lightBlueAccent,
               onPressed: () {
                 //print(newTaskTitle);
+                // Accessing TaskData object using provider
+                Provider.of<TaskData>(context, listen: false)
+                    .addNewTask(newTaskTitle);
+                // To pop away from current screen
+                Navigator.pop(context);
               },
               child: Text(
                 'Add',

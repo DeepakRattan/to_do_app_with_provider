@@ -44,6 +44,7 @@ class TasksScreen extends StatelessWidget {
                     ),
                     Text(
                       // Step 4: Provider
+                      // Access TaskData object here
                       '${Provider.of<TaskData>(context).taskCount} tasks',
                       style: TextStyle(
                         color: Colors.white,
